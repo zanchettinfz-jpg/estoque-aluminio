@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.SobraController" styleClass="app-root">
+    <left>
+        <VBox prefWidth="240" spacing="8" styleClass="sidebar">
+            <Label text="Estoque Alumínio" styleClass="sidebar-title"/>
+            <Label text="Sobras de barras" styleClass="sidebar-subtitle"/>
+            <Button text="Dashboard" onAction="#abrirDashboard" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Produtos" onAction="#abrirProdutos" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Estoque" onAction="#abrirEstoque" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Sobras" onAction="#abrirSobras" maxWidth="Infinity" styleClass="nav-button-active"/>
+            <Button text="Movimentações" onAction="#abrirMovimentacoes" maxWidth="Infinity" styleClass="nav-button"/>
+            <VBox VBox.vgrow="ALWAYS"/>
+            <Button text="Sair" onAction="#sair" maxWidth="Infinity" styleClass="danger-button"/>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="16" styleClass="content">
+            <Label text="Controle de Sobras" styleClass="page-title"/>
+            <TextField fx:id="buscaField" promptText="Pesquisar por produto, status ou localização da sobra"/>
+            <HBox spacing="16" VBox.vgrow="ALWAYS">
+                <VBox spacing="10" prefWidth="360" styleClass="panel">
+                    <Label text="Nova sobra" styleClass="section-title"/>
+                    <ComboBox fx:id="produtoCombo" promptText="Produto de origem" maxWidth="Infinity"/>
+                    <TextField fx:id="tamanhoOriginalField" promptText="Tamanho original da barra"/>
+                    <TextField fx:id="tamanhoSobraField" promptText="Tamanho restante"/>
+                    <TextField fx:id="localizacaoField" promptText="SOB-A1"/>
+                    <ComboBox fx:id="statusCombo" maxWidth="Infinity"/>
+                    <Button text="Cadastrar sobra" onAction="#salvar" maxWidth="Infinity" styleClass="primary-button"/>
+                    <Button text="Marcar reutilizada" onAction="#reutilizar" maxWidth="Infinity" styleClass="secondary-button"/>
+                    <Button text="Marcar perda" onAction="#perda" maxWidth="Infinity" styleClass="danger-button"/>
+                </VBox>
+                <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="panel">
+                    <Label text="Sobras disponíveis e histórico" styleClass="section-title"/>
+                    <TableView fx:id="sobrasTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="produtoColumn" text="Produto" prefWidth="140"/>
+                            <TableColumn fx:id="tamanhoOriginalColumn" text="Original" prefWidth="100"/>
+                            <TableColumn fx:id="tamanhoSobraColumn" text="Sobra" prefWidth="100"/>
+                            <TableColumn fx:id="localizacaoColumn" text="Localização" prefWidth="130"/>
+                            <TableColumn fx:id="statusColumn" text="Status" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

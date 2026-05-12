@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.EstoqueController" styleClass="app-root">
+    <left>
+        <VBox prefWidth="240" spacing="8" styleClass="sidebar">
+            <Label text="Estoque Alumínio" styleClass="sidebar-title"/>
+            <Label text="Operação de estoque" styleClass="sidebar-subtitle"/>
+            <Button text="Dashboard" onAction="#abrirDashboard" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Produtos" onAction="#abrirProdutos" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Estoque" onAction="#abrirEstoque" maxWidth="Infinity" styleClass="nav-button-active"/>
+            <Button text="Sobras" onAction="#abrirSobras" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Movimentações" onAction="#abrirMovimentacoes" maxWidth="Infinity" styleClass="nav-button"/>
+            <VBox VBox.vgrow="ALWAYS"/>
+            <Button text="Sair" onAction="#sair" maxWidth="Infinity" styleClass="danger-button"/>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="16" styleClass="content">
+            <Label text="Controle de Estoque" styleClass="page-title"/>
+            <HBox spacing="16" VBox.vgrow="ALWAYS">
+                <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="panel">
+                    <TextField fx:id="buscaField" promptText="Localizar material por código, descrição ou endereço"/>
+                    <TableView fx:id="produtosTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="codigoColumn" text="Código" prefWidth="130"/>
+                            <TableColumn fx:id="descricaoColumn" text="Descrição" prefWidth="320"/>
+                            <TableColumn fx:id="quantidadeColumn" text="Saldo" prefWidth="80"/>
+                            <TableColumn fx:id="localizacaoColumn" text="Localização" prefWidth="130"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+                <VBox spacing="12" prefWidth="360" styleClass="panel">
+                    <Label text="Movimentação" styleClass="section-title"/>
+                    <Label fx:id="produtoSelecionadoLabel" text="Nenhum produto selecionado" wrapText="true" styleClass="strong"/>
+                    <ComboBox fx:id="tipoCombo" promptText="Tipo de movimentação" maxWidth="Infinity"/>
+                    <TextField fx:id="quantidadeField" promptText="Quantidade"/>
+                    <TextArea fx:id="observacaoArea" promptText="Observação" prefRowCount="5"/>
+                    <Button text="Registrar movimentação" onAction="#registrarMovimentacao" maxWidth="Infinity" styleClass="primary-button"/>
+                    <Label text="Ocupação física" styleClass="section-title"/>
+                    <ListView fx:id="ocupacaoList" VBox.vgrow="ALWAYS"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
