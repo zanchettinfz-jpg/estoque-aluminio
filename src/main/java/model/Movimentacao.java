@@ -9,6 +9,7 @@ public class Movimentacao {
     private String produtoDescricao;
     private String tipo;
     private int quantidade;
+    private String destino;
     private String observacao;
     private LocalDateTime dataMovimentacao;
     private int usuarioId;
@@ -62,6 +63,14 @@ public class Movimentacao {
         this.quantidade = quantidade;
     }
 
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
     public String getObservacao() {
         return observacao;
     }
@@ -92,5 +101,15 @@ public class Movimentacao {
 
     public void setUsuarioNome(String usuarioNome) {
         this.usuarioNome = usuarioNome;
+    }
+
+    public String getProdutoNome() {
+        if (produtoCodigo == null || produtoCodigo.isBlank()) {
+            return produtoDescricao;
+        }
+        if (produtoDescricao == null || produtoDescricao.isBlank()) {
+            return produtoCodigo;
+        }
+        return produtoCodigo + " - " + produtoDescricao;
     }
 }

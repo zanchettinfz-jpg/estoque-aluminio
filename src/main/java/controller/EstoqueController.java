@@ -19,6 +19,7 @@ public class EstoqueController extends BaseNavigationController {
     @FXML private TextField buscaField;
     @FXML private ComboBox<String> tipoCombo;
     @FXML private TextField quantidadeField;
+    @FXML private TextField destinoField;
     @FXML private TextArea observacaoArea;
     @FXML private Label produtoSelecionadoLabel;
     @FXML private TableView<Produto> produtosTable;
@@ -47,13 +48,22 @@ public class EstoqueController extends BaseNavigationController {
     @FXML
     private void registrarMovimentacao() {
         try {
-            estoqueService.movimentar(selecionado, tipoCombo.getValue(), Integer.parseInt(quantidadeField.getText().trim()), observacaoArea.getText());
+            estoqueService.movimentar(selecionado, tipoCombo.getValue(), parseQuantidade(), destinoField.getText(), observacaoArea.getText());
             quantidadeField.clear();
+            destinoField.clear();
             observacaoArea.clear();
             carregar();
             AlertUtil.info("Estoque", "Movimentacao registrada e estoque atualizado.");
         } catch (RuntimeException exception) {
             AlertUtil.warning("Estoque", exception.getMessage());
+        }
+    }
+
+    private int parseQuantidade() {
+        try {
+            return Integer.parseInt(quantidadeField.getText().trim());
+        } catch (RuntimeException exception) {
+            throw new IllegalArgumentException("Informe uma quantidade valida.");
         }
     }
 

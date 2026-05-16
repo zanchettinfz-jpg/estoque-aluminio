@@ -21,6 +21,7 @@
             <Button text="Estoque" onAction="#abrirEstoque" maxWidth="Infinity" styleClass="nav-button"/>
             <Button text="Sobras" onAction="#abrirSobras" maxWidth="Infinity" styleClass="nav-button-active"/>
             <Button text="Movimentações" onAction="#abrirMovimentacoes" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Solicitacoes de Acesso" onAction="#abrirUsuarios" maxWidth="Infinity" styleClass="nav-button"/>
             <VBox VBox.vgrow="ALWAYS"/>
             <Button text="Sair" onAction="#sair" maxWidth="Infinity" styleClass="danger-button"/>
         </VBox>

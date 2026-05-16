@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -43,8 +44,8 @@ public class DashboardController extends BaseNavigationController {
     }
 
     private void carregar() {
-        String nome = SessaoUsuario.getUsuarioLogado() == null ? "Administrador" : SessaoUsuario.getUsuarioLogado().getNome();
-        usuarioLabel.setText(nome);
+        SessaoUsuario.exigirLogin();
+        usuarioLabel.setText(SessaoUsuario.getUsuarioLogado().getNome());
         totalProdutosLabel.setText(String.valueOf(produtoService.totalProdutos()));
         quantidadeEstoqueLabel.setText(String.valueOf(produtoService.quantidadeTotal()));
         movimentacoesHojeLabel.setText(String.valueOf(estoqueService.movimentacoesHoje()));
@@ -55,7 +56,9 @@ public class DashboardController extends BaseNavigationController {
         series.setName("Movimentacoes");
         series.getData().add(new XYChart.Data<>("Entradas", estoqueService.totalEntradas()));
         series.getData().add(new XYChart.Data<>("Saidas", estoqueService.totalSaidas()));
-        fluxoChart.getData().setAll(series);
+        ObservableList<XYChart.Series<String, Number>> data = FXCollections.observableArrayList();
+        data.add(series);
+        fluxoChart.setData(data);
         fluxoChart.setLegendVisible(false);
     }
 }

@@ -20,6 +20,11 @@ public class ProdutoService {
     }
 
     public Produto salvar(Produto produto) {
+        SessaoUsuario.exigirOperacao();
+        if (produto == null) {
+            throw new IllegalArgumentException("Informe os dados do produto.");
+        }
+        normalizar(produto);
         validar(produto);
         if (produtoRepository.existsByCodigo(produto.getCodigo(), produto.getId())) {
             throw new IllegalArgumentException("Ja existe produto cadastrado com este codigo.");
@@ -28,8 +33,12 @@ public class ProdutoService {
     }
 
     public void excluir(Produto produto) {
+        SessaoUsuario.exigirAdministrador();
         if (produto == null || produto.getId() == 0) {
             throw new IllegalArgumentException("Selecione um produto para excluir.");
+        }
+        if (produtoRepository.hasMovimentacoes(produto.getId())) {
+            throw new IllegalArgumentException("Produto com historico de movimentacoes nao pode ser excluido.");
         }
         produtoRepository.delete(produto.getId());
     }
@@ -60,5 +69,18 @@ public class ProdutoService {
 
     private boolean isBlank(String value) {
         return value == null || value.isBlank();
+    }
+
+    private void normalizar(Produto produto) {
+        produto.setCodigo(trim(produto.getCodigo()));
+        produto.setDescricao(trim(produto.getDescricao()));
+        produto.setCor(trim(produto.getCor()));
+        produto.setLinha(trim(produto.getLinha()));
+        produto.setUnidade(trim(produto.getUnidade()));
+        produto.setLocalizacao(trim(produto.getLocalizacao()));
+    }
+
+    private String trim(String value) {
+        return value == null ? "" : value.trim();
     }
 }

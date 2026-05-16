@@ -15,22 +15,24 @@
             fx:controller="controller.MovimentacaoController" styleClass="app-root">
     <left>
         <VBox prefWidth="240" spacing="8" styleClass="sidebar">
-            <Label text="Estoque Alumínio" styleClass="sidebar-title"/>
-            <Label text="Histórico" styleClass="sidebar-subtitle"/>
+            <Label text="Estoque Aluminio" styleClass="sidebar-title"/>
+            <Label text="Historico" styleClass="sidebar-subtitle"/>
             <Button text="Dashboard" onAction="#abrirDashboard" maxWidth="Infinity" styleClass="nav-button"/>
             <Button text="Produtos" onAction="#abrirProdutos" maxWidth="Infinity" styleClass="nav-button"/>
             <Button text="Estoque" onAction="#abrirEstoque" maxWidth="Infinity" styleClass="nav-button"/>
             <Button text="Sobras" onAction="#abrirSobras" maxWidth="Infinity" styleClass="nav-button"/>
-            <Button text="Movimentações" onAction="#abrirMovimentacoes" maxWidth="Infinity" styleClass="nav-button-active"/>
+            <Button text="Movimentacoes" onAction="#abrirMovimentacoes" maxWidth="Infinity" styleClass="nav-button-active"/>
+            <Button text="Solicitacoes de Acesso" onAction="#abrirUsuarios" maxWidth="Infinity" styleClass="nav-button"/>
             <VBox VBox.vgrow="ALWAYS"/>
             <Button text="Sair" onAction="#sair" maxWidth="Infinity" styleClass="danger-button"/>
         </VBox>
     </left>
     <center>
         <VBox spacing="16" styleClass="content">
-            <Label text="Histórico de Movimentações" styleClass="page-title"/>
+            <Label text="HISTORICO DE MOVIMENTACOES" styleClass="page-title"/>
             <HBox spacing="10">
-                <TextField fx:id="produtoFiltroField" promptText="Produto ou código" HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="produtoFiltroField" promptText="Pesquisa rapida por produto ou codigo" HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="usuarioFiltroField" promptText="Usuario" prefWidth="180"/>
                 <ComboBox fx:id="tipoFiltroCombo" prefWidth="210"/>
                 <DatePicker fx:id="dataFiltroPicker" prefWidth="160"/>
                 <Button text="Limpar" onAction="#limparFiltros" styleClass="secondary-button"/>
@@ -38,12 +40,13 @@
             <VBox spacing="10" styleClass="panel" VBox.vgrow="ALWAYS">
                 <TableView fx:id="movimentacoesTable" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="produtoColumn" text="Produto" prefWidth="140"/>
-                        <TableColumn fx:id="tipoColumn" text="Tipo" prefWidth="180"/>
+                        <TableColumn fx:id="dataColumn" text="Data" prefWidth="170"/>
+                        <TableColumn fx:id="usuarioColumn" text="Usuario" prefWidth="140"/>
+                        <TableColumn fx:id="produtoColumn" text="Produto" prefWidth="240"/>
+                        <TableColumn fx:id="tipoColumn" text="Tipo" prefWidth="130"/>
                         <TableColumn fx:id="quantidadeColumn" text="Quantidade" prefWidth="100"/>
-                        <TableColumn fx:id="dataColumn" text="Data/hora" prefWidth="200"/>
-                        <TableColumn fx:id="observacaoColumn" text="Observação" prefWidth="280"/>
-                        <TableColumn fx:id="usuarioColumn" text="Usuário" prefWidth="130"/>
+                        <TableColumn fx:id="destinoColumn" text="Destino" prefWidth="220"/>
+                        <TableColumn fx:id="observacaoColumn" text="Observacao" prefWidth="260"/>
                     </columns>
                 </TableView>
             </VBox>

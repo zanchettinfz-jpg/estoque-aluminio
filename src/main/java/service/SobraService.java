@@ -13,6 +13,7 @@ public class SobraService {
     }
 
     public void salvar(Sobra sobra) {
+        SessaoUsuario.exigirOperacao();
         if (sobra.getProdutoId() <= 0) {
             throw new IllegalArgumentException("Selecione o produto da sobra.");
         }
@@ -32,6 +33,7 @@ public class SobraService {
     }
 
     public void reutilizar(Sobra sobra) {
+        SessaoUsuario.exigirOperacao();
         if (sobra == null) {
             throw new IllegalArgumentException("Selecione uma sobra.");
         }
@@ -39,6 +41,7 @@ public class SobraService {
     }
 
     public void perda(Sobra sobra) {
+        SessaoUsuario.exigirOperacao();
         if (sobra == null) {
             throw new IllegalArgumentException("Selecione uma sobra.");
         }

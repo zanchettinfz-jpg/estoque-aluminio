@@ -97,6 +97,19 @@ public class ProdutoRepository {
         }
     }
 
+    public boolean hasMovimentacoes(int produtoId) {
+        String sql = "SELECT 1 FROM movimentacoes WHERE produto_id = ? LIMIT 1";
+        try (Connection connection = ConexaoSQLite.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, produtoId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Erro ao verificar historico do produto", exception);
+        }
+    }
+
     public void updateQuantidade(Connection connection, int produtoId, int novaQuantidade) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("UPDATE produtos SET quantidade = ? WHERE id = ?")) {
             statement.setInt(1, novaQuantidade);
@@ -158,14 +171,21 @@ public class ProdutoRepository {
     private void update(Produto produto) {
         String sql = """
                 UPDATE produtos
-                SET codigo = ?, descricao = ?, cor = ?, linha = ?, tamanho = ?, quantidade = ?,
+                SET codigo = ?, descricao = ?, cor = ?, linha = ?, tamanho = ?,
                     unidade = ?, localizacao = ?, observacoes = ?
                 WHERE id = ?
                 """;
         try (Connection connection = ConexaoSQLite.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            fillStatement(statement, produto);
-            statement.setInt(10, produto.getId());
+            statement.setString(1, produto.getCodigo());
+            statement.setString(2, produto.getDescricao());
+            statement.setString(3, produto.getCor());
+            statement.setString(4, produto.getLinha());
+            statement.setDouble(5, produto.getTamanho());
+            statement.setString(6, produto.getUnidade());
+            statement.setString(7, produto.getLocalizacao());
+            statement.setString(8, produto.getObservacoes());
+            statement.setInt(9, produto.getId());
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw new IllegalStateException("Erro ao atualizar produto", exception);

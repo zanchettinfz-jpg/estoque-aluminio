@@ -17,20 +17,21 @@ public class MovimentacaoRepository {
 
     public void save(Connection connection, Movimentacao movimentacao) throws SQLException {
         String sql = """
-                INSERT INTO movimentacoes (produto_id, tipo, quantidade, observacao, usuario_id)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO movimentacoes (produto_id, usuario_id, tipo, quantidade, destino, observacao)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, movimentacao.getProdutoId());
-            statement.setString(2, movimentacao.getTipo());
-            statement.setInt(3, movimentacao.getQuantidade());
-            statement.setString(4, movimentacao.getObservacao());
-            statement.setInt(5, movimentacao.getUsuarioId());
+            statement.setInt(2, movimentacao.getUsuarioId());
+            statement.setString(3, movimentacao.getTipo());
+            statement.setInt(4, movimentacao.getQuantidade());
+            statement.setString(5, movimentacao.getDestino());
+            statement.setString(6, movimentacao.getObservacao());
             statement.executeUpdate();
         }
     }
 
-    public List<Movimentacao> findAll(String produto, String tipo, LocalDate data) {
+    public List<Movimentacao> findAll(String pesquisa, String usuario, String tipo, LocalDate data) {
         List<Movimentacao> movimentacoes = new ArrayList<>();
         StringBuilder sql = new StringBuilder("""
                 SELECT m.*, p.codigo produto_codigo, p.descricao produto_descricao, u.nome usuario_nome
@@ -40,11 +41,15 @@ public class MovimentacaoRepository {
                 WHERE 1 = 1
                 """);
         List<Object> params = new ArrayList<>();
-        if (produto != null && !produto.isBlank()) {
+        if (pesquisa != null && !pesquisa.isBlank()) {
             sql.append(" AND (lower(p.codigo) LIKE ? OR lower(p.descricao) LIKE ?)");
-            String like = "%" + produto.toLowerCase() + "%";
+            String like = "%" + pesquisa.toLowerCase() + "%";
             params.add(like);
             params.add(like);
+        }
+        if (usuario != null && !usuario.isBlank()) {
+            sql.append(" AND lower(u.nome) LIKE ?");
+            params.add("%" + usuario.toLowerCase() + "%");
         }
         if (tipo != null && !tipo.isBlank() && !"Todos".equals(tipo)) {
             sql.append(" AND m.tipo = ?");
@@ -128,6 +133,7 @@ public class MovimentacaoRepository {
         movimentacao.setProdutoDescricao(resultSet.getString("produto_descricao"));
         movimentacao.setTipo(resultSet.getString("tipo"));
         movimentacao.setQuantidade(resultSet.getInt("quantidade"));
+        movimentacao.setDestino(resultSet.getString("destino"));
         movimentacao.setObservacao(resultSet.getString("observacao"));
         Timestamp timestamp = resultSet.getTimestamp("data_movimentacao");
         if (timestamp != null) {

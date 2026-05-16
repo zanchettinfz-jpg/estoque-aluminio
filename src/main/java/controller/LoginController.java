@@ -24,4 +24,13 @@ public class LoginController {
             AlertUtil.warning("Acesso negado", exception.getMessage());
         }
     }
+
+    @FXML
+    private void abrirCadastro() {
+        try {
+            EstoqueApplication.showCadastro();
+        } catch (IOException exception) {
+            AlertUtil.error("Cadastro", "Nao foi possivel abrir a tela de cadastro.");
+        }
+    }
 }

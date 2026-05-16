@@ -16,13 +16,14 @@
             fx:controller="controller.EstoqueController" styleClass="app-root">
     <left>
         <VBox prefWidth="240" spacing="8" styleClass="sidebar">
-            <Label text="Estoque Alumínio" styleClass="sidebar-title"/>
-            <Label text="Operação de estoque" styleClass="sidebar-subtitle"/>
+            <Label text="Estoque Aluminio" styleClass="sidebar-title"/>
+            <Label text="Operacao de estoque" styleClass="sidebar-subtitle"/>
             <Button text="Dashboard" onAction="#abrirDashboard" maxWidth="Infinity" styleClass="nav-button"/>
             <Button text="Produtos" onAction="#abrirProdutos" maxWidth="Infinity" styleClass="nav-button"/>
             <Button text="Estoque" onAction="#abrirEstoque" maxWidth="Infinity" styleClass="nav-button-active"/>
             <Button text="Sobras" onAction="#abrirSobras" maxWidth="Infinity" styleClass="nav-button"/>
-            <Button text="Movimentações" onAction="#abrirMovimentacoes" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Movimentacoes" onAction="#abrirMovimentacoes" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button text="Solicitacoes de Acesso" onAction="#abrirUsuarios" maxWidth="Infinity" styleClass="nav-button"/>
             <VBox VBox.vgrow="ALWAYS"/>
             <Button text="Sair" onAction="#sair" maxWidth="Infinity" styleClass="danger-button"/>
         </VBox>
@@ -32,24 +33,25 @@
             <Label text="Controle de Estoque" styleClass="page-title"/>
             <HBox spacing="16" VBox.vgrow="ALWAYS">
                 <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="panel">
-                    <TextField fx:id="buscaField" promptText="Localizar material por código, descrição ou endereço"/>
+                    <TextField fx:id="buscaField" promptText="Localizar material por codigo, descricao ou endereco"/>
                     <TableView fx:id="produtosTable" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="codigoColumn" text="Código" prefWidth="130"/>
-                            <TableColumn fx:id="descricaoColumn" text="Descrição" prefWidth="320"/>
+                            <TableColumn fx:id="codigoColumn" text="Codigo" prefWidth="130"/>
+                            <TableColumn fx:id="descricaoColumn" text="Descricao" prefWidth="320"/>
                             <TableColumn fx:id="quantidadeColumn" text="Saldo" prefWidth="80"/>
-                            <TableColumn fx:id="localizacaoColumn" text="Localização" prefWidth="130"/>
+                            <TableColumn fx:id="localizacaoColumn" text="Localizacao" prefWidth="130"/>
                         </columns>
                     </TableView>
                 </VBox>
                 <VBox spacing="12" prefWidth="360" styleClass="panel">
-                    <Label text="Movimentação" styleClass="section-title"/>
+                    <Label text="Movimentacao rastreavel" styleClass="section-title"/>
                     <Label fx:id="produtoSelecionadoLabel" text="Nenhum produto selecionado" wrapText="true" styleClass="strong"/>
-                    <ComboBox fx:id="tipoCombo" promptText="Tipo de movimentação" maxWidth="Infinity"/>
+                    <ComboBox fx:id="tipoCombo" promptText="Tipo de movimentacao" maxWidth="Infinity"/>
                     <TextField fx:id="quantidadeField" promptText="Quantidade"/>
-                    <TextArea fx:id="observacaoArea" promptText="Observação" prefRowCount="5"/>
-                    <Button text="Registrar movimentação" onAction="#registrarMovimentacao" maxWidth="Infinity" styleClass="primary-button"/>
-                    <Label text="Ocupação física" styleClass="section-title"/>
+                    <TextField fx:id="destinoField" promptText="Destino / responsavel da saida"/>
+                    <TextArea fx:id="observacaoArea" promptText="Observacao" prefRowCount="5"/>
+                    <Button text="Registrar movimentacao" onAction="#registrarMovimentacao" maxWidth="Infinity" styleClass="primary-button"/>
+                    <Label text="Ocupacao fisica" styleClass="section-title"/>
                     <ListView fx:id="ocupacaoList" VBox.vgrow="ALWAYS"/>
                 </VBox>
             </HBox>

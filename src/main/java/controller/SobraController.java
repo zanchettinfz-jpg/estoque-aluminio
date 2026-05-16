@@ -64,7 +64,7 @@ public class SobraController extends BaseNavigationController {
             sobra.setProdutoId(produto == null ? 0 : produto.getId());
             sobra.setTamanhoOriginal(parseDouble(tamanhoOriginalField.getText()));
             sobra.setTamanhoSobra(parseDouble(tamanhoSobraField.getText()));
-            sobra.setLocalizacao(localizacaoField.getText().trim());
+            sobra.setLocalizacao(localizacaoField.getText() == null ? "" : localizacaoField.getText().trim());
             sobra.setStatus(statusCombo.getValue());
             sobraService.salvar(sobra);
             limpar();
@@ -111,6 +111,10 @@ public class SobraController extends BaseNavigationController {
     }
 
     private double parseDouble(String value) {
-        return value == null || value.isBlank() ? 0 : Double.parseDouble(value.trim().replace(",", "."));
+        try {
+            return value == null || value.isBlank() ? 0 : Double.parseDouble(value.trim().replace(",", "."));
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("Informe um tamanho valido.");
+        }
     }
 }

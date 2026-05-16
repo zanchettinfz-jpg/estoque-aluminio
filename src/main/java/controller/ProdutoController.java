@@ -47,14 +47,16 @@ public class ProdutoController extends BaseNavigationController {
     private void salvar() {
         try {
             Produto produto = selecionado == null ? new Produto() : selecionado;
-            produto.setCodigo(codigoField.getText().trim());
-            produto.setDescricao(descricaoField.getText().trim());
-            produto.setCor(corField.getText().trim());
-            produto.setLinha(linhaField.getText().trim());
+            produto.setCodigo(texto(codigoField));
+            produto.setDescricao(texto(descricaoField));
+            produto.setCor(texto(corField));
+            produto.setLinha(texto(linhaField));
             produto.setTamanho(parseDouble(tamanhoField.getText()));
-            produto.setQuantidade(parseInt(quantidadeField.getText()));
-            produto.setUnidade(unidadeField.getText().trim());
-            produto.setLocalizacao(localizacaoField.getText().trim());
+            if (produto.getId() == 0) {
+                produto.setQuantidade(parseInt(quantidadeField.getText()));
+            }
+            produto.setUnidade(texto(unidadeField));
+            produto.setLocalizacao(texto(localizacaoField));
             produto.setObservacoes(observacoesArea.getText());
             produtoService.salvar(produto);
             limpar();
@@ -124,10 +126,22 @@ public class ProdutoController extends BaseNavigationController {
     }
 
     private int parseInt(String value) {
-        return value == null || value.isBlank() ? 0 : Integer.parseInt(value.trim());
+        try {
+            return value == null || value.isBlank() ? 0 : Integer.parseInt(value.trim());
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("Informe uma quantidade valida.");
+        }
     }
 
     private double parseDouble(String value) {
-        return value == null || value.isBlank() ? 0 : Double.parseDouble(value.trim().replace(",", "."));
+        try {
+            return value == null || value.isBlank() ? 0 : Double.parseDouble(value.trim().replace(",", "."));
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("Informe um tamanho valido.");
+        }
+    }
+
+    private String texto(TextField field) {
+        return field.getText() == null ? "" : field.getText().trim();
     }
 }
